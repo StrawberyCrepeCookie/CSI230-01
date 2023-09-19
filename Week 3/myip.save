@@ -1,0 +1,4 @@
+# Returns the IP address without /x
+
+ip=$(bash getfullip)
+echo "${ip:15:$16}"
