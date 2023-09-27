@@ -9,7 +9,7 @@ ip1binary=$(echo "obase=2;$myip1" | bc)
 ip2binary=$(echo "obase=2;$myip2" | bc)
 ip3binary=$(echo "obase=2;$myip3" | bc)
 
-ipbinary="${ip1binary} ${ip2binary} ${ip3binary} "
+ipbinary="${ip1binary} ${ip2binary} 000000${ip3binary} "
 
 for ((i=1; i<255; i++)); do
 	ibinary=$(echo "obase=2;$i" | bc)
@@ -30,6 +30,6 @@ for ((i=1; i<255; i++)); do
 	else 
 		getzeros="${ibinary}"
 	fi
-	echo "${ipbinary}${getzeros}/${prefix}" >> output.txt
+	echo "${ipbinary}${getzeros} /${prefix}" >> output.txt
 done
 
