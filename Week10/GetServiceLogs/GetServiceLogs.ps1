@@ -1,57 +1,38 @@
 ﻿cls
 
-[bool] $loop = $true
-$array = @('all','stopped','running')
+# Declare the array and all services
 
-$allServices = Get-Service | select name, status
-
-function opt_1() {
-    $allServices 
-}
-
-function opt2() {
-    $allServices | where { $_.Status -eq $array[1] } 
-}
-
-function opt3() {
-    $allServices | where { $_.Status -eq $array[2] }
-    }
-function opt4() {
-    write-host "Exiting... "
-}
-
+Get-Service
+cls
+# Function gets called recursivly to simulate loop
 function do_loop() {
 
-    write-host "What would you like to do?"
-    write-host "1. View all"
-    write-host "2. View stopped"
-    write-host "3. View running"
-    write-host "4. Quit"
+$array = @('all','stopped','running')
 
-    $choice = read-host -Prompt "Enter: "
+    $choice = read-host -Prompt "
+    What would you like to do?
+    1. View all
+    2. View stopped
+    3. View running
+    4. Quit
 
-    Write-Host "You have chosen: "
-    $choice
+    Enter"
 
-    if ($choice -eq 1) {
-      write-host "opt_1" 
-      opt_1
-      do_loop
-    } elseif ($choice -eq 2) { 
-      write-host "opt_2"
-      opt2
-      do_loop
-    } elseif ($choice -eq 3) { 
-      write-host "opt_3" 
-      opt3
-      do_loop
-    } elseif ($choice -eq 4) { 
-      write-host "4" 
-      opt4
+
+
+    if ($choice -ilike 1) {
+      Get-Service | select name, status
+    } elseif ($choice -ilike 2) { 
+      Get-Service | where { $_.Status -eq $array[1] } | select name, status
+    } elseif ($choice -ilike 3) { 
+      Get-Service | select name, status| where { $_.Status -eq $array[2] } | select name, status
+    } elseif ($choice -ilike 4) { 
+      break
     } else {
       write-host "Error, invalid input"
-      do_loop
     }
+
+    do_loop
 }
 
 do_loop
